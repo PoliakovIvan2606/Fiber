@@ -38,5 +38,5 @@ func main() {
 	bookRputer.Register()
 
 
-	app.Listen(cfg.HttpServer.Port)
+	app.Listen(cfg.HttpServer.Host + cfg.HttpServer.Port)
 }
