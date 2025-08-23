@@ -1,6 +1,6 @@
 services:
   app:
-    image: prod-service
+    image: 
     container_name: ps-app
     depends_on:
       - postgresql
