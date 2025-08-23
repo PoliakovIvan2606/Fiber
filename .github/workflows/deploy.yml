@@ -1,0 +1,33 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # ветка, по которой деплой
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Copy project to server
+        run: |
+          rsync -avz --exclude='.git' ./ user@your_server:/home/user/fiber_app
+
+      - name: SSH and deploy
+        run: |
+          ssh user@your_server << 'EOF'
+            cd /home/user/fiber_app
+            docker-compose pull || true   # если используешь remote images
+            docker-compose build
+            docker-compose down
+            docker-compose up -d
+          EOF

@@ -1,0 +1,26 @@
+services:
+  app:
+    image: prod-service
+    container_name: ps-app
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    networks:
+      - ps
+
+  postgresql:
+    image: postgres:latest
+    container_name: ps-psql
+    environment:
+      - POSTGRES_DB=fiber_book
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - ps
+
+
+networks:
+  ps:
