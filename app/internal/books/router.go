@@ -42,7 +42,11 @@ func (r *BookRouter) GetBook(c *fiber.Ctx) error {
 		return fmt.Errorf("%s: %w", op, err)
 	}
 
-	return c.JSON(book)
+	response := map[string]interface{}{
+		"book": book,
+		"name": "Ivan",
+	}
+	return c.JSON(response)
 }
 
 func (r *BookRouter) PostBook(c *fiber.Ctx) error {
