@@ -27,6 +27,8 @@ jobs:
         run: |
           ssh root@213.21.222.32 << 'EOF'
             cd prod/Golang/Fiber/
+            git reset --hard
+            git pull origin main
             docker-compose down     
             docker build -t prod-service .
             docker-compose up -d
